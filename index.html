@@ -1,23 +1,355 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <title>Home</title>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <!--
-      Need a visual blank slate?
-      Remove all code in `styles.css`!
-    -->
-    <link rel="stylesheet" href="styles.css" />
-    <script type="module" src="script.js"></script>
-  </head>
-  <body>
-    <nav>
-      <a href="/" aria-current="page">Home</a>
-      <a href="/page2.html">Other page</a>
-    </nav>
+  
+    <script type="application/ld+json">
+        {
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "포장이사 비용은 어떻게 결정되나요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "이사 비용은 짐의 양(톤), 이동 거리, 작업 인원 수, 사다리차 사용 여부, 이사 날짜(손 없는 날 등), 추가 서비스 요청 등에 따라 달라집니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "포장이사 업체 선정 시 가장 중요한 기준은 무엇인가요?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "정식 허가 등록 여부, 피해 발생 시 보상을 위한 적재물 배상책임보험 가입 여부, 방문 견적을 통한 정확한 서비스 확인, 그리고 실제 고객 후기를 종합적으로 고려해야 합니다."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "2026년 이사 성수기는 언제인가요?",
+              "@id": "#성수기-답변",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "통상적으로 2~3월과 9~10월이 이사 성수기이며, 특히 주말과 '손 없는 날'은 이사 수요가 집중되어 평일보다 이사 비용이 15%~30% 가량 더 높아집니다. 미리 예약하는 것이 중요합니다."
+              }
+            }
+          ]
+        }
+    </script>
+
+    <style>
+        :root {
+            --primary-color: #1A375A; /* 짙은 네이비 블루 */
+            --secondary-color: #3B7DD8; /* 부드러운 스카이 블루 */
+            --accent-color: #2ECC71; /* 그린 계열 강조색 */
+            --text-color: #333;
+            --bg-light: #F7F9FC;
+            --bg-dark: #1E3A8A;
+            --btn-cta: #FF7043; /* 오렌지 계열 CTA */
+            --border-color: #e0e0e0;
+        }
+        
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap');
+        
+        body { font-family: 'Noto Sans KR', sans-serif; margin: 0; padding: 0; background-color: var(--bg-light); color: var(--text-color); line-height: 1.7; font-weight: 400; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 25px; }
+        
+        /* 헤더 */
+        header { background-color: #fff; padding: 15px 0; text-align: center; border-bottom: 1px solid var(--border-color); box-shadow: 0 1px 5px rgba(0,0,0,0.05); }
+        header h1 { margin: 0; font-size: 1.8em; color: var(--primary-color); font-weight: 700; }
+        header h1 a { text-decoration: none; color: inherit; }
+
+        /* 히어로 섹션 */
+        .hero { background-image: linear-gradient(135deg, var(--primary-color) 0%, var(--bg-dark) 100%); color: #fff; text-align: center; padding: 100px 20px 60px; }
+        .hero h1 { font-size: 3.5em; margin-bottom: 20px; font-weight: 700; line-height: 1.2; }
+        .hero p { font-size: 1.4em; margin-bottom: 40px; font-weight: 300; }
+        
+        /* CTA 버튼 */
+        .cta-btn { background-color: var(--btn-cta); color: #fff; padding: 18px 45px; font-size: 1.4em; font-weight: 700; border: none; border-radius: 50px; cursor: pointer; transition: background-color 0.3s, transform 0.2s; box-shadow: 0 6px 15px rgba(0,0,0,0.3); text-decoration: none; display: inline-block; text-transform: uppercase; }
+        .cta-btn:hover { background-color: #e56038; transform: translateY(-3px); }
+
+        /* 비교견적 폼 */
+        .compare-form-box { background-color: #fff; padding: 40px; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); margin-top: -80px; position: relative; z-index: 10; border-top: 5px solid var(--secondary-color); }
+        .compare-form-box h2 { color: var(--primary-color); text-align: center; margin-bottom: 30px; font-size: 2em; font-weight: 700; }
+        .compare-form-box label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--primary-color); }
+        .compare-form-box input, .compare-form-box select { width: 100%; padding: 14px; margin-bottom: 20px; border: 1px solid var(--border-color); border-radius: 8px; box-sizing: border-box; font-size: 1em; }
+        
+        /* 컨텐츠 섹션 */
+        .content-section { background-color: #fff; padding: 70px 0; margin-top: 20px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
+        .content-section h2 { font-size: 2.8em; color: var(--primary-color); border-bottom: 3px solid var(--secondary-color); padding-bottom: 15px; margin-bottom: 40px; text-align: center; font-weight: 700; }
+        .content-section h3 { font-size: 1.8em; color: var(--secondary-color); margin-top: 45px; margin-bottom: 20px; font-weight: 700; border-left: 5px solid var(--accent-color); padding-left: 15px; }
+        
+        /* 팁/정보 카드 */
+        .tip-grid { display: flex; flex-wrap: wrap; justify-content: space-between; margin-top: 30px; }
+        .tip-grid .card { width: calc(33.33% - 20px); margin: 10px 0; padding: 30px; background-color: var(--bg-light); border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.08); transition: transform 0.3s; }
+        .tip-grid .card:hover { transform: translateY(-5px); }
+        .tip-grid .card h4 { color: var(--primary-color); font-size: 1.2em; margin-top: 0; border-bottom: 1px dashed var(--secondary-color); padding-bottom: 10px; }
+        
+        /* FAQ 섹션 */
+        .faq-item { border-bottom: 1px solid var(--border-color); padding: 25px 0; }
+        .faq-item h3 { cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-size: 1.3em; color: var(--primary-color); font-weight: 500; }
+        .faq-item h3::after { content: '▼'; font-size: 0.8em; color: var(--secondary-color); transition: transform 0.3s; }
+        .faq-item.active h3::after { transform: rotate(180deg); }
+        .faq-item p { display: none; padding-top: 15px; color: #555; background-color: #fcfcfc; padding: 15px; border-radius: 5px; margin-top: 10px; border-left: 4px solid var(--accent-color); }
+        .faq-item.active p { display: block; }
+        
+        /* 표/그래프 스타일 */
+        table { width: 100%; border-collapse: collapse; margin-top: 25px; margin-bottom: 35px; font-size: 0.95em; }
+        th, td { border: 1px solid var(--border-color); padding: 12px; text-align: center; }
+        th { background-color: var(--secondary-color); color: #fff; font-weight: 500; }
+        td { background-color: #fff; }
+
+        /* 외부 링크 목록 */
+        .external-links ul { list-style: none; padding: 0; }
+        .external-links li { margin-bottom: 10px; border-left: 3px solid var(--accent-color); padding-left: 10px; }
+        .external-links a { color: var(--secondary-color); text-decoration: none; font-weight: 500; }
+        .external-links a:hover { text-decoration: underline; }
+
+        /* 키워드 리스트 */
+        .keyword-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; justify-content: center; margin-top: 30px; }
+        .keyword-list li { background-color: var(--secondary-color); color: #fff; padding: 10px 20px; margin: 7px; border-radius: 25px; font-weight: 500; transition: background-color 0.3s; }
+        .keyword-list li:hover { background-color: #2e62b1; }
+
+        /* 모바일 반응형 */
+        @media (max-width: 992px) {
+            .container { padding: 0 15px; }
+            .hero h1 { font-size: 2.8em; }
+            .hero p { font-size: 1.2em; }
+            .compare-form-box { margin-top: -60px; padding: 30px; }
+            .content-section h2 { font-size: 2.2em; }
+            .content-section h3 { font-size: 1.6em; }
+            .tip-grid .card { width: calc(50% - 15px); }
+        }
+
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2em; }
+            .hero p { font-size: 1em; }
+            .cta-btn { padding: 15px 30px; font-size: 1.1em; }
+            .tip-grid .card { width: 100%; margin: 10px 0; }
+            header h1 { font-size: 1.5em; }
+            .content-section h2 { font-size: 1.8em; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1><a href="/">🚚 2026년 포장이사 준비 가이드</a></h1>
+        </div>
+    </header>
+
     <main>
-      <h1>Home page</h1>
+        <section class="hero">
+            <div class="container">
+                <h1>포장이사준비, 2026년 이사 비용 **최대 30% 절약**하세요!</h1>
+                <p>믿을 수 있는 **이사업체추천** 비교 견적부터 완벽한 이사 체크리스트까지, 한 번에 해결하세요.</p>
+                 
+                <div class="compare-form-box">
+                    <h2>실시간 **포장이사** 비교 견적 요청</h2>
+                    <p>간단한 정보 입력으로 **저렴한 이사 비용**과 **우수 이사업체**를 지금 바로 찾아드립니다.</p>
+                    <form action="#" method="post">
+                        <label for="move-type">이사 종류</label>
+                        <select id="move-type" name="move-type" required>
+                            <option value="">이사 종류 선택</option>
+                            <option value="pack">포장이사</option>
+                            <option value="half-pack">반포장이사</option>
+                            <option value="storage">보관이사</option>
+                            <option value="office">사무실이사</option>
+                            <option value="oneroom">원룸/소형 이사</option>
+                        </select>
+
+                        <label for="move-date">희망 이사 날짜 (2026년 기준)</label>
+                        <input type="date" id="move-date" name="move-date" value="2026-03-15" required>
+
+                        <label for="start-area">출발지 (예: 서울특별시 강남구)</label>
+                        <input type="text" id="start-area" name="start-area" placeholder="출발지 주소 또는 지역명을 입력하세요" required>
+
+                        <label for="end-area">도착지 (예: 경기도 성남시 분당구)</label>
+                        <input type="text" id="end-area" name="end-area" placeholder="도착지 주소 또는 지역명을 입력하세요" required>
+                        
+                        <label for="phone">연락처</label>
+                        <input type="tel" id="phone" name="phone" placeholder="휴대폰 번호를 입력하세요" required>
+                        
+                        <button type="submit" class="cta-btn">포장이사 최저가 견적 비교 받기</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="container">
+                <h2>✨ **포장이사준비** 핵심 3단계: 성공적인 이사를 위한 전략</h2>
+                <div class="tip-grid">
+                    <div class="card">
+                        <h4>1단계: **이사 비용** 산출 기준 파악</h4>
+                        <p>**포장이사**는 짐의 양, 이사 거리, 작업 환경에 따라 가격이 천차만별입니다. **방문 견적**을 통해 정확한 짐 양을 확인하고, 추가 비용이 발생할 수 있는 특수 짐(피아노, 에어컨 등)을 미리 고지해야 **저렴한 이사**를 계획할 수 있습니다.</p>
+                    </div>
+                    <div class="card">
+                        <h4>2단계: **이사업체추천** 및 신뢰성 검증</h4>
+                        <p>최소 3곳 이상의 **포장이사** 업체에서 견적을 받고 비교해야 합니다. 정식 허가 업체인지, **적재물 배상책임보험**에 가입되어 있는지 반드시 확인하세요. 저렴한 가격에 현혹되지 않고 서비스 품질을 우선 고려해야 합니다.</p>
+                    </div>
+                    <div class="card">
+                        <h4>3단계: **이사 체크리스트** 및 계약서 확인</h4>
+                        <p>계약 전 이사 당일의 세부 서비스 내용(포장 범위, 청소, 정리정돈 수준)을 서면으로 명확히 해야 합니다. 파손/분실 대비를 위해 중요한 물품은 미리 분류하고, **이사 체크리스트**에 따라 진행 상황을 점검하는 것이 중요합니다.</p>
+                    </div>
+                </div>
+                
+                <p style="margin-top: 40px; text-align: center; font-size: 1.1em; font-weight: 500; color: var(--primary-color);">
+                    **2026년 이사**를 준비하는 고객님들을 위해 **포장이사준비** 과정에서 발생할 수 있는 모든 변수를 줄이고, 가장 합리적인 **이사 비용**으로 최고의 서비스를 받을 수 있도록 돕겠습니다.
+                </p>
+
+                <h3 id="2026-trend">🗓️ 2026년 **포장이사** 트렌드 및 비용 예측</h3>
+                <p>최근 몇 년간 인건비와 물류비 상승으로 **이사 비용**이 전반적으로 오르는 추세입니다. 2026년에도 이러한 경향은 이어질 것으로 보이며, 특히 **손 없는 날**이나 주말의 경우 평일 대비 20~30% 높은 가격이 형성될 것으로 예상됩니다. 따라서 이사 날짜를 유연하게 조정하거나 최소 2~3개월 전에 미리 예약하는 것이 **이사 비용**을 절약하는 핵심입니다.</p>
+
+                <h4>평균 **포장이사 비용** 예측 (서울/경기, 5톤 기준, 2026년)</h4>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>시기</th>
+                            <th>평일 (비성수기)</th>
+                            <th>주말 (성수기)</th>
+                            <th>손 없는 날</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>**2026년** 상반기</td>
+                            <td>130만원 ~ 160만원</td>
+                            <td>170만원 ~ 210만원</td>
+                            <td>200만원 ~ 250만원</td>
+                        </tr>
+                        <tr>
+                            <td>**2026년** 하반기</td>
+                            <td>140만원 ~ 170만원</td>
+                            <td>180만원 ~ 220만원</td>
+                            <td>210만원 ~ 260만원</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-size: 0.9em; color: #777;">*위 금액은 평균적인 예측치이며, 실제 **이사 비용**은 작업 환경 및 **이사업체추천** 조건에 따라 달라집니다.</p>
+
+                <h3 id="checklist">✅ **포장이사준비** 60일 이사 체크리스트 (심화 과정)</h3>
+                <p>성공적인 **포장이사**는 치밀한 계획에서 시작됩니다. 다음은 이사 날짜를 기준으로 역산하여 준비해야 할 핵심 체크리스트입니다. 이 목록을 활용하여 **포장이사준비**의 누락을 최소화하고, 스트레스 없는 이사를 경험하세요.</p>
+                
+                <form action="#" method="post" style="background-color: #f0f4f8; padding: 25px; border-radius: 10px;">
+                    <h4>나만의 이사 준비 진행 상황 확인</h4>
+                    <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                        <div style="width: calc(48% - 10px); margin-bottom: 15px;">
+                            <label><input type="checkbox" name="check-60"> D-60: 이사 날짜 확정 및 **포장이사** 업체 3곳 이상 견적 요청</label>
+                            <label><input type="checkbox" name="check-45"> D-45: 전/월세 계약 및 잔금 일정 조율 완료</label>
+                            <label><input type="checkbox" name="check-30"> D-30: **이사업체추천** 최종 선정 및 계약금 지불, 특약 사항 확인</label>
+                        </div>
+                        <div style="width: calc(48% - 10px); margin-bottom: 15px;">
+                            <label><input type="checkbox" name="check-14"> D-14: 각종 공과금/관리비 정산 문의 및 자동이체 해지</label>
+                            <label><input type="checkbox" name="check-7"> D-7: 대형 폐기물 처리 신고 및 이사갈 집의 도면 확인</label>
+                            <label><input type="checkbox" name="check-1"> D-1: 귀중품 별도 보관 및 이사 당일 식사 준비</label>
+                        </div>
+                    </div>
+                </form>
+
+                <h3 id="tip">💰 **이사 비용**을 획기적으로 절약하는 5가지 실전 팁</h3>
+                <p>**포장이사준비**의 가장 큰 목적 중 하나는 합리적인 **이사 비용**을 찾는 것입니다. 다음 팁들은 실제로 수십만 원의 비용을 절감할 수 있는 실질적인 노하우입니다.</p>
+                <ol>
+                    <li>**이사 비수기 공략:** 1월, 7월, 8월의 평일은 **이사 비용**이 가장 저렴합니다. 날짜 선택의 유연성이 있다면 이 시기를 노리세요.</li>
+                    <li>**불필요한 짐 최소화:** **포장이사** 비용은 짐의 양(톤)에 비례합니다. 이사 전 대형 폐기물, 안 입는 옷 등을 미리 정리하면 짐 양을 줄여 **이사 비용**을 절감할 수 있습니다.</li>
+                    <li>**반포장이사 고려:** 포장은 업체에 맡기고, 정리 및 풀기는 직접 하면 **포장이사** 대비 10~20%의 비용을 절약할 수 있습니다.</li>
+                    <li>**오후 이사 활용:** 오전 이사가 부담스럽다면, 오후 이사를 제안하는 업체와 협의하여 추가 할인을 받을 수 있는 경우도 있습니다.</li>
+                    <li>**부가 서비스 명확화:** 에어컨 설치, 벽걸이 TV 설치 등 부가 서비스를 외부 업체에 따로 맡기는 것이 **포장이사** 업체에 포함시키는 것보다 저렴할 수 있습니다.</li>
+                </ol>
+
+                <h3 id="firm">🔍 믿을 수 있는 **이사업체추천** 및 선정 기준</h3>
+                <p>좋은 **포장이사** 업체를 고르는 것은 이사 성공의 90%를 차지합니다. 다음의 기준을 통해 검증된 **이사업체**를 선정하여 안전한 이사를 보장받으세요.</p>
+                
+                
+
+                <ol>
+                    <li>**정식 허가 및 보험 가입 여부:** 화물자동차 운송주선사업 허가증과 **적재물 배상책임보험** 가입 증서를 확인해야 합니다. 이는 법적 보호를 위한 최소한의 장치입니다.</li>
+                    <li>**방문 견적 필수:** 전화나 온라인 견적만으로는 정확한 **이사 비용** 산출이 어렵습니다. 반드시 전문 견적 인력이 집을 방문하여 짐의 양, 이사 환경을 확인하게 하세요.</li>
+                    <li>**계약서의 명확성:** 이사 시작 시간, 추가 비용 발생 가능 항목, 파손 시 배상 기준, 특수 작업(사다리차 비용 등)이 명확히 명시된 관인 계약서를 작성해야 합니다. 구두 계약은 절대 피해야 합니다.</li>
+                    <li>**AS 및 서비스 수준:** 포장 자재의 청결도, 가구 배치 및 마무리 정리정돈 서비스 수준을 과거 고객 후기를 통해 확인하고, AS 기간을 명시해 두어야 합니다.</li>
+                </ol>
+
+                <h3 id="keywords">📊 함께 많이 찾는 **포장이사** 연관 키워드</h3>
+                <p>고객님들이 **포장이사준비**와 함께 가장 많이 검색하는 핵심 키워드 목록입니다. 이 키워드들은 여러분의 이사 계획에 필요한 추가적인 정보를 얻는 데 도움을 줄 것입니다.</p>
+                <ul class="keyword-list">
+                    <li>#이사짐센터비용</li>
+                    <li>#원룸포장이사</li>
+                    <li>#반포장이사후기</li>
+                    <li>#보관이사전문</li>
+                    <li>#이사꿀팁</li>
+                    <li>#손없는날달력2026</li>
+                    <li>#이사짐견적</li>
+                    <li>#아파트포장이사</li>
+                    <li>#용달이사비용</li>
+                    <li>#이삿짐센터가격비교</li>
+                    <li>#장거리이사비용</li>
+                    <li>#투룸포장이사</li>
+                </ul>
+
+                <h3 id="coverage">🗺️ 전국 **포장이사** 협력 가능 주요 지역 (SEO 지역 키워드 최적화)</h3>
+                <p>**포장이사** 서비스는 전국 어디서나 필요합니다. 저희는 다음 지역을 포함한 전국 우수 **이사업체추천** 네트워크를 보유하고 있습니다. 고객님의 이사 지역을 확인하세요.</p>
+                
+                <div style="font-size: 0.95em; columns: 4; column-gap: 20px; margin-top: 20px;">
+                    <p>서울 (강남, 송파, 서초, 강동, 강서, 마포, 영등포, 노원, 도봉, 은평, 종로), 부산 (해운대, 수영, 동래, 금정, 사하), 대구 (수성, 달서, 북구), 인천 (연수, 부평, 서구, 남동), 광주 (서구, 북구), 대전 (유성, 서구), 울산 (남구, 북구), 세종, 경기 (수원, 용인, 성남, 고양, 화성, 남양주, 안양, 부천, 광명, 평택, 안산, 의정부, 파주, 김포, 하남, 오산, 이천, 안성), 강원 (춘천, 원주, 강릉, 속초), 충북 (청주, 충주, 제천), 충남 (천안, 아산, 공주, 서산), 전북 (전주, 익산, 군산), 전남 (목포, 순천, 여수, 광양), 경북 (포항, 구미, 경산, 안동), 경남 (창원, 김해, 양산, 진주, 거제), 제주 (제주시, 서귀포시).</p>
+                    <p style="font-weight: 700; color: var(--accent-color);">*협력 가능 지역은 계속 확대 중입니다.</p>
+                </div>
+
+                <h3 id="trust">🤝 공신력 있는 외부 정보 및 참고 사이트</h3>
+                <p>**포장이사준비** 관련하여 더욱 심층적인 정보와 법적 내용을 확인하시려면 다음의 공신력 있는 외부 사이트를 참고하시기 바랍니다. **이사 비용** 분쟁 해결 및 피해 구제에 대한 정보는 반드시 숙지해야 합니다.</p>
+                
+                <div class="external-links">
+                    <ul>
+                        <li><a href="https://www.law.go.kr/LSW/main.html" target="_blank" rel="nofollow noopener">국가법령정보센터</a>: 운송 및 이사와 관련된 법규 및 표준약관 확인</li>
+                        <li><a href="https://www.kca.go.kr/main.do" target="_blank" rel="nofollow noopener">한국소비자원</a>: 이사 관련 피해 구제 및 분쟁 해결 기준 제공</li>
+                        <li><a href="https://namu.wiki/w/%EC%9D%B4%EC%82%AC" target="_blank" rel="nofollow noopener">나무위키 - 이사 항목</a>: 이사의 정의, 종류, 역사 등 일반적인 정보</li>
+                        <li><a href="https://www.msit.go.kr/web/main/main.do" target="_blank" rel="nofollow noopener">과학기술정보통신부</a>: 이사 후 인터넷, 전화 이전 설치 관련 정보</li>
+                        <li><a href="https://www.molit.go.kr/portal/main.do" target="_blank" rel="nofollow noopener">국토교통부</a>: 화물자동차 운송 관련 법령 및 정책 정보</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section class="content-section" style="background-color: var(--bg-light);">
+            <div class="container">
+                <h2>자주 묻는 질문 (**포장이사준비** FAQ)</h2>
+                <div class="faq-item">
+                    <h3 id="q1">Q. **포장이사**와 반포장이사의 차이점은 무엇인가요?</h3>
+                    <p>A. **포장이사**는 포장부터 운반, 정리정돈, 청소까지 모든 과정을 업체가 전담합니다. 반포장이사는 포장은 업체가 하지만, 도착지에서 짐 풀기 및 정리정돈은 고객이 직접 하는 방식입니다. 반포장이사는 **포장이사**보다 **이사 비용**이 10~20% 저렴하지만, 고객의 노동력이 더 필요합니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 id="q2">Q. **이사 비용** 견적 시 추가 비용이 발생하지 않도록 주의할 점은?</h3>
+                    <p>A. 추가 비용 발생을 막으려면 **방문 견적** 시 사다리차 사용 여부(출발지/도착지), 이삿짐의 종류(대형 가전, 고가 물품), 작업 환경(엘리베이터 유무, 계단 작업), 이사 시간 제한 등을 **이사업체**에 정확하게 고지해야 합니다. 모든 조건은 반드시 계약서에 명시해야 합니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 id="q3">Q. **손 없는 날**이 꼭 좋은 이사 날짜인가요?</h3>
+                    <p>A. '손 없는 날'은 악귀가 없는 길일로 여겨지지만, 미신적인 요소입니다. 해당 날짜에 **포장이사** 수요가 폭발적으로 증가하여 **이사 비용**이 평소보다 훨씬 비싸집니다. **저렴한 이사**를 원한다면 평일이나 비수기를 선택하는 것이 합리적입니다.</p>
+                </div>
+                <div class="faq-item">
+                    <h3 id="q4">Q. **이사업체**의 파손 피해 보상 기준은 어떻게 되나요?</h3>
+                    <p>A. 정식 **이사업체**는 **적재물 배상책임보험**에 의무적으로 가입되어 있습니다. 이사 중 파손이나 분실이 발생하면, 현장에서 즉시 확인하고 파손 사진을 남긴 후 계약서 상의 배상 절차를 따라야 합니다. 통상적으로 피해 접수 후 7일 이내에 보상 처리가 진행됩니다.</p>
+                </div>
+            </div>
+        </section>
     </main>
-  </body>
-</html>
+    
+    <footer>
+        <div class="container">
+            <p><strong>🚚 2026년 포장이사 준비 가이드</strong> &copy; 2026 All Rights Reserved. 본 사이트는 신뢰할 수 있는 **이사업체추천** 비교 정보를 제공하며, 실제 계약은 고객과 해당 업체 간에 이루어집니다.</p>
+            <p>
+                <a href="#">이용약관</a> | 
+                <a href="#">개인정보처리방침</a> | 
+                <a href="#">제휴 및 문의</a>
+            </p>
+            <p>본 정보는 **포장이사준비**를 돕기 위한 참고 자료이며, 정확한 **이사 비용**은 반드시 **방문 견적**을 통해 확인하시기 바랍니다.</p>
+        </div>
+    </footer>
+    
+    <script>
+        // FAQ 토글 기능
+        document.querySelectorAll('.faq-item h3').forEach(item => {
+            item.addEventListener('click', event => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+
+  
